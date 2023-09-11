@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task Tracker</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        .high-priority {
+            background-color: red;
+            color: white;
+        }
+
+        .low-priority {
+            background-color: green;
+            color: white;
+        }
+
+        select {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h2>Task Tracker</h2>
+    <form id="taskForm">
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName" required>
+        <label for="priority">Priority:</label>
+        <select id="priority" name="priority" required>
+            <option value="high">High</option>
+            <option value="low">Low</option>
+        </select>
+        <button type="submit">Add Task</button>
+    </form>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Task Name</th>
+                <th>Priority</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="taskList">
+            <!-- Tasks will be displayed here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById("taskForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const taskName = document.getElementById("taskName").value;
+            const priority = document.getElementById("priority").value;
+
+            const taskList = document.getElementById("taskList");
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td>${taskName}</td>
+                <td class="${priority === 'high' ? 'high-priority' : 'low-priority'}">${priority}</td>
+                <td><button class="favorite-button">Favorite</button></td>
+            `;
+
+            taskList.appendChild(newRow);
+
+            // Clear the form
+            document.getElementById("taskName").value = "";
+            document.getElementById("priority").value = "high";
+        });
+    </script>
+</body>
+</html>
