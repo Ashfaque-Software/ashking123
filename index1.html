@@ -88,3 +88,111 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Hospital - Doctor Records</title>
+</head>
+<body>
+    <form id="doctor-form">
+        <label for="name">Name of the Doctor:</label>
+        <input type="text" id="name" required><br>
+
+        <label for="doctor-id">Doctor ID:</label>
+        <input type="text" id="doctor-id" required><br>
+
+        <label for="specialization">Specialization:</label>
+        <select id="specialization" required>
+            <option value="Dermatologist">Dermatologist</option>
+            <option value="ENT">ENT</option>
+            <option value="Dentist">Dentist</option>
+            <option value="Gynecologist">Gynecologist</option>
+            <option value="COVID">COVID</option>
+        </select><br>
+
+        <label for="experience">Experience in years:</label>
+        <input type="number" id="experience" required><br>
+
+        <label for="email">Email address:</label>
+        <input type="email" id="email" required><br>
+
+        <label for="mobile">Mobile Number:</label>
+        <input type="tel" id="mobile" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Doctor ID</th>
+                <th>Specialization</th>
+                <th>Experience (years)</th>
+                <th>Email address</th>
+                <th>Mobile Number</th>
+                <th>Role</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="doctor-table"></tbody>
+    </table>
+
+   
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('doctor-form');
+    const table = document.getElementById('doctor-table');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Get input values
+        const name = document.getElementById('name').value;
+        const doctorId = document.getElementById('doctor-id').value;
+        const specialization = document.getElementById('specialization').value;
+        const experience = parseFloat(document.getElementById('experience').value);
+        const email = document.getElementById('email').value;
+        const mobile = document.getElementById('mobile').value;
+
+        // Determine role based on experience
+        let role;
+        if (experience > 5) {
+            role = 'Senior';
+        } else if (experience >= 2) {
+            role = 'Junior';
+        } else {
+            role = 'Trainee';
+        }
+
+        // Create a new row in the table
+        const row = table.insertRow(-1);
+
+        // Insert cells with data
+        row.insertCell(0).textContent = name;
+        row.insertCell(1).textContent = doctorId;
+        row.insertCell(2).textContent = specialization;
+        row.insertCell(3).textContent = experience;
+        row.insertCell(4).textContent = email;
+        row.insertCell(5).textContent = mobile;
+        row.insertCell(6).textContent = role;
+
+        // Create a delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', function () {
+            table.deleteRow(row.rowIndex);
+        });
+        row.insertCell(7).appendChild(deleteButton);
+
+        // Clear the form
+        form.reset();
+    });
+});
+
+</script>
+</html>
